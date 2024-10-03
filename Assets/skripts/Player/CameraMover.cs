@@ -12,7 +12,6 @@ public class CameraMover : MonoBehaviour
         _transform = transform;
     }
 
-
     public Vector3 Forward => Vector3.ProjectOnPlane(_transform.forward, Vector3.up).normalized;
     public Vector3 Right => Vector3.ProjectOnPlane(_transform.right, Vector3.up).normalized;
 

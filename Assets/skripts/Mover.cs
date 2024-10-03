@@ -13,17 +13,22 @@ public class Mover : MonoBehaviour
         _controller = GetComponent<CharacterController>();
     }
 
-    public void Move(float directionX, float directionZ, Vector3 forward, Vector3 right)
+    private void OnValidate()
+    {
+        if (_speed < 0)
+            _speed = 1;
+    }
+
+    public void Move(float speedX, float speedZ, Vector3 forward, Vector3 right)
     {
         if (_controller.isGrounded)
         {
-            Vector3 playerDirection = (forward * directionZ + right * directionX) * _speed * Time.deltaTime;
-            _controller.Move(playerDirection + Vector3.down);
+            Vector3 playerSpeed = (forward * speedZ + right * speedX) * _speed * Time.deltaTime;
+            _controller.Move(playerSpeed + Vector3.down);
         }
         else
         {
             _controller.Move(_controller.velocity + Physics.gravity * Time.deltaTime);
         }
     }
-
 }

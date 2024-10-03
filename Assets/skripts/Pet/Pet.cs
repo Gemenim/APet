@@ -1,19 +1,25 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(RigidbodyMover))]
 public class Pet : MonoBehaviour
-{
+{    
     [SerializeField] private float _friendzone;
-    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private LayerMask _layerMask;    
 
     private Transform _transform;
-    private Mover _mover;
+    private RigidbodyMover _mover;
     private Transform _target;
 
     private void Awake()
     {
         _transform = transform;
-        _mover = GetComponent<Mover>();
+        _mover = GetComponent<RigidbodyMover>();
+    }
+
+    private void OnValidate()
+    {
+        if (_friendzone < 0)
+            _friendzone = 1;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,7 +30,8 @@ public class Pet : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _target = null;
+        if (other.TryGetComponent<Player>(out Player player))
+            _target = null;
     }
 
     private void Update()
@@ -33,12 +40,11 @@ public class Pet : MonoBehaviour
             return;
 
         RaycastHit hit = GetRaycastHit();
-        _transform.LookAt(hit.point);
+        _mover.TurnTo(hit.point);
 
         if (hit.distance > _friendzone)
         {
-            Vector3 direction = (hit.point - _transform.position).normalized;
-            _mover.Move(direction.x, direction.z, Vector3.forward, Vector3.right);
+            _mover.Move(hit.point);
         }
     }
 

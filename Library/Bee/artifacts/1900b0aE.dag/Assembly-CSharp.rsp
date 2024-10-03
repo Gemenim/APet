@@ -357,6 +357,7 @@
 -analyzer:"A:/Unity/Unity Hub/2022.3.12f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/skripts/Mover.cs"
 "Assets/skripts/Pet/Pet.cs"
+"Assets/skripts/Pet/RigidbodyMover.cs"
 "Assets/skripts/Player/CameraMover.cs"
 "Assets/skripts/Player/InputPlayer.cs"
 "Assets/skripts/Player/Player.cs"
